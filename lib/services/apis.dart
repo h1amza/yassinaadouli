@@ -11,7 +11,7 @@ class DarakAPIS {
   Future<List<RoomsModel>> fetchPost() async {
     final response = await http.get('https://mobile.darak-app.com/api/v1');
     if (response.statusCode == 200) {
-      //print(json.decode(response.body));
+      print(json.decode(response.body));
       return roomsModelFromJson(response.body);
     } else {
       throw Exception('Failed to load post');
@@ -31,6 +31,8 @@ class DarakAPIS {
       var res = json.decode(response.body);
 
       MsgSend.iduser = res['ID']; //post_title ID
+      MsgSend.emailuser=res['user_email'];
+      MsgSend.nomuser=res['display_name'];
 
       final prefs = await SharedPreferences.getInstance();
       prefs.setString('token', res['ID']);

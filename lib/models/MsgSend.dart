@@ -1,5 +1,7 @@
 class MsgSend {
   static String iduser;
+  static String nomuser;
+  static String emailuser;
   static String iduserRoom;
   static String idDroom;
   static List<DateTime> pikDate;

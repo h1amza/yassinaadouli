@@ -1,4 +1,5 @@
 import 'package:daraapp/colors/appColors.dart';
+import 'package:daraapp/models/MsgSend.dart';
 import 'package:daraapp/utils/appfonts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -41,7 +42,7 @@ class _UserAcountState extends State<UserAcount> {
               height: 20,
             ),
             Text(
-              'Current User Name',
+              MsgSend.nomuser,
               style: AppFonts.roomsTitles,
             ),
             SizedBox(
@@ -56,7 +57,7 @@ class _UserAcountState extends State<UserAcount> {
                   width: 5,
                 ),
                 Text(
-                  'email@exemple.com',
+                  MsgSend.emailuser,
                   style: AppFonts.subTitle,
                 ),
               ],
