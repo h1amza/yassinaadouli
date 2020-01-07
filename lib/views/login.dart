@@ -1,5 +1,6 @@
 import 'package:daraapp/colors/appColors.dart';
 import 'package:daraapp/models/ModelLogin.dart';
+import 'package:daraapp/models/MsgSend.dart';
 import 'package:daraapp/services/apis.dart';
 import 'package:daraapp/utils/appfonts.dart';
 import 'package:daraapp/views/rooms.dart';
@@ -54,6 +55,10 @@ class _LogInState extends State<LogIn> {
         ),
       );
       if (res.isNotEmpty) {
+        MsgSend.check();
+        print(MsgSend.emailuser);
+        print(MsgSend.nomuser);
+        print(MsgSend.iduser);
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(

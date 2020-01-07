@@ -1,3 +1,4 @@
+import 'package:daraapp/models/MsgSend.dart';
 import 'package:daraapp/models/RoomModel.dart';
 import 'package:daraapp/services/apis.dart';
 import 'package:daraapp/views/Search.dart';
@@ -25,6 +26,7 @@ class _RoomsPageState extends State<RoomsPage> {
   void initState() {
     super.initState();
     post = api.fetchPost();
+    MsgSend.check();
 
     tabs = [
       FutureBuilder<List<RoomsModel>>(

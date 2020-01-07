@@ -31,11 +31,13 @@ class DarakAPIS {
       var res = json.decode(response.body);
 
       MsgSend.iduser = res['ID']; //post_title ID
-      MsgSend.emailuser=res['user_email'];
-      MsgSend.nomuser=res['display_name'];
+      MsgSend.emailuser = res['user_email'];
+      MsgSend.nomuser = res['display_name'];
 
       final prefs = await SharedPreferences.getInstance();
       prefs.setString('token', res['ID']);
+      prefs.setString('email', res['user_email']);
+      prefs.setString('name', res['display_name']);
 
       return json.decode(response.body);
     } else {

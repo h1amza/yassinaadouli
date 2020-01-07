@@ -95,7 +95,6 @@ class _SearchResultsListWidgetState extends State<SearchResultsListWidget> {
             );
           });
     }
-
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
