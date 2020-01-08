@@ -12,6 +12,8 @@ class MessagesModel {
     this.dates
   }
   );
+  static  List<String> messagesReverse = List<String>();
+
 
   static List<MessagesModel> countModel = List<MessagesModel>();
 

@@ -12,6 +12,13 @@ class Messaging extends StatefulWidget {
 
 class _MessagingState extends State<Messaging> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    MessagesModel.messagesReverse = widget.object.messages.reversed.toList();
+    widget.object.messages=MessagesModel.messagesReverse;
+  }
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -34,41 +41,6 @@ class _MessagingState extends State<Messaging> {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: <Widget>[
                         l[0] == 'User:'?
-                        (Row(children: <Widget>[
-                          Container(
-                            padding: EdgeInsets.all(6),
-                            margin: EdgeInsets.all(5),
-                            decoration: BoxDecoration(
-                              color: AppColors.aliZarin,
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(50.0),
-                              ),
-                            ),
-                            child: Icon(
-                              Icons.person,
-                              size: 50,
-                              color: AppColors.mdNigthBlue,
-                            ),
-                          ),
-                          Container(
-                            width: 260,
-                            padding: EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                              color: AppColors.appbarTitle,
-                              borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(20.0),
-                                bottomRight: Radius.circular(20.0),
-                              ),
-                            ),
-                            child: Text(
-                              l[1],
-                              style: AppFonts.subTitle,
-                              maxLines: 5,
-                            ),
-                          ),
-                        ],
-                        ))
-                            :
                         (
                             Row(
                               children: <Widget>[
@@ -105,7 +77,40 @@ class _MessagingState extends State<Messaging> {
                                 ),
                               ],
                             )
-                        )
+                        ):(Row(children: <Widget>[
+                          Container(
+                            padding: EdgeInsets.all(6),
+                            margin: EdgeInsets.all(5),
+                            decoration: BoxDecoration(
+                              color: AppColors.aliZarin,
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(50.0),
+                              ),
+                            ),
+                            child: Icon(
+                              Icons.person,
+                              size: 50,
+                              color: AppColors.mdNigthBlue,
+                            ),
+                          ),
+                          Container(
+                            width: 260,
+                            padding: EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              color: AppColors.appbarTitle,
+                              borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(20.0),
+                                bottomRight: Radius.circular(20.0),
+                              ),
+                            ),
+                            child: Text(
+                              l[1],
+                              style: AppFonts.subTitle,
+                              maxLines: 5,
+                            ),
+                          ),
+                        ],
+                        ))
                       ],
                     ),
                   );
