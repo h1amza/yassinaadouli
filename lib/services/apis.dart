@@ -69,9 +69,9 @@ class DarakAPIS {
     await http.post(
       url,
       body: {
-        'post_title': id,
+        'post_title':  MsgSend.iduserRoom,
         'post_parent': MsgSend.idDroom,
-        'post_author': MsgSend.iduserRoom,
+        'post_author': id,
         'post_content':
         "date reservation:${MsgSend.pikDate.toString()}, message: $m",
       },

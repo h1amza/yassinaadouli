@@ -29,6 +29,7 @@ class _MessagingState extends State<Messaging> {
         children: <Widget>[
           Flexible(
             child: ListView.builder(
+              reverse: true,
               itemCount: widget.object.messages.length,
               itemBuilder: (context,index){
                 String message = widget.object.messages[index];
