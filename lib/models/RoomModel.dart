@@ -5,7 +5,8 @@
 import 'dart:convert';
 
 List<RoomsModel> roomsModelFromJson(String str) =>
-    List<RoomsModel>.from(json.decode(str).map((x) => RoomsModel.fromJson(x)));
+    List<RoomsModel>.from(json.decode(str).map((x) =>
+        RoomsModel.fromJson(x)));
 
 String roomsModelToJson(List<RoomsModel> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));

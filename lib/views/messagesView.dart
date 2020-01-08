@@ -10,24 +10,27 @@ class Messages extends StatefulWidget {
 }
 
 class _MessagesState extends State<Messages> {
-  Future<List<MessagesModel>> post;
 
+
+  Future<List> post;
   var api = DarakAPIS();
   Widget Message;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    api.getMessages();
-    Message = FutureBuilder<List<MessagesModel>>(
+    post = api.getMessages();
+    Message = FutureBuilder(
       future: post,
       builder: (context, snapshot) {
-        if (snapshot.hasData) {
+        if(snapshot.hasData) {
           return cardMessage(snapshot);
-        } else if (snapshot.hasError) {
-          return Text("${snapshot.error}");
         }
-        return Center(
+        else {
+          if(snapshot.hasError){
+            return Text("${snapshot.error}");
+          }
+          return Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -49,6 +52,8 @@ class _MessagesState extends State<Messages> {
             ],
           ),
         );
+        }
+
       },
     );
   }
@@ -66,11 +71,10 @@ class _MessagesState extends State<Messages> {
       itemBuilder: (BuildContext context, int index) {
         return GestureDetector(
           onTap: () {
-            print("tapped");
-            /*Navigator.push(
+            Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => Messaging()),
-            );*/
+              MaterialPageRoute(builder: (context) => Messaging(snapshot.data[index])),
+            );
           },
           child: Column(
             children: <Widget>[
@@ -84,22 +88,32 @@ class _MessagesState extends State<Messages> {
                 ),
                 title: Row(
                   children: <Widget>[
-                    Text(
-                      "aaaaaa",
-                      style: AppFonts.cardTitle,
+                    Flexible(
+                      child: Text(
+                        "ROOM: ${snapshot.data[index].idRoom}",
+                        style: AppFonts.cardTitle,
+                      ),
                     ),
                     SizedBox(
                       width: 16.0,
                     ),
-                    Text(
-                      "user room",
-                      style: AppFonts.cardPrice,
+                    Center(
+                      child: Text(
+                        "${snapshot.data[index].date}",
+                        style: AppFonts.cardPrice,
+                      ),
                     ),
                   ],
                 ),
-                subtitle: Text(
-                  "message",
-                  style: AppFonts.subTitle,
+                subtitle:Row(
+                  children: <Widget>[
+                    Flexible(
+                      child: Text(
+                          "${snapshot.data[index].lastMessage}",
+                          style: AppFonts.subTitle,
+                      ),
+                    ),
+                  ],
                 ),
                 trailing: Icon(
                   Icons.arrow_forward_ios,
@@ -113,58 +127,3 @@ class _MessagesState extends State<Messages> {
     );
   }
 }
-/*
-ListView.builder(
-       itemCount: 2,
-      itemBuilder: (context, index) {
-        // MessagesModel _model = MessagesModel.dummyData[index];
-        return GestureDetector(
-          onTap: () {
-            print("tapped");
-            DarakAPIS api = DarakAPIS();
-            api.getMessages();
-            /*Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Messaging()),
-            );*/
-          },
-          child: Column(
-            children: <Widget>[
-              Divider(
-                height: 12.0,
-              ),
-              ListTile(
-                leading: CircleAvatar(
-                  radius: 24.0,
-                  child: Icon(Icons.person),
-                ),
-                title: Row(
-                  children: <Widget>[
-                    Text(
-                      "aaaaaa",
-                      style: AppFonts.cardTitle,
-                    ),
-                    SizedBox(
-                      width: 16.0,
-                    ),
-                    Text(
-                      "user room",
-                      style: AppFonts.cardPrice,
-                    ),
-                  ],
-                ),
-                subtitle: Text(
-                  "message",
-                  style: AppFonts.subTitle,
-                ),
-                trailing: Icon(
-                  Icons.arrow_forward_ios,
-                  size: 14.0,
-                ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
-*/

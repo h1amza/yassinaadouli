@@ -19,8 +19,8 @@ class _UserAcountState extends State<UserAcount> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    print(MsgSend.nomuser);
-    print(MsgSend.emailuser);
+    /*print(MsgSend.nomuser);
+    print(MsgSend.emailuser);*/
 
   }
   @override

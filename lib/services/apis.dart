@@ -1,17 +1,17 @@
 import 'dart:convert';
+import 'package:daraapp/models/MessagesModel.dart';
 import 'package:daraapp/models/ModelLogin.dart';
 import 'package:daraapp/models/ModelSignIn.dart';
 import 'package:daraapp/models/MsgSend.dart';
 import 'package:http/http.dart' as http;
 import 'package:daraapp/models/RoomModel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 class DarakAPIS {
   static Future<List<RoomsModel>> post;
   Future<List<RoomsModel>> fetchPost() async {
     final response = await http.get('https://mobile.darak-app.com/api/v1');
     if (response.statusCode == 200) {
-      print(json.decode(response.body));
+      //print(json.decode(response.body));
       return roomsModelFromJson(response.body);
     } else {
       throw Exception('Failed to load post');
@@ -65,41 +65,75 @@ class DarakAPIS {
     print('post_parent: ${MsgSend.idDroom}');
     print('post_author: ${MsgSend.iduserRoom}');
     var url = "https://mobile.darak-app.com/api/v1/create_wpestate_message";
-    final response = await http.post(
+    //final response =
+    await http.post(
       url,
       body: {
         'post_title': id,
         'post_parent': MsgSend.idDroom,
         'post_author': MsgSend.iduserRoom,
         'post_content':
-            "date reservation:${MsgSend.pikDate.toString()} ,message: $m",
+        "date reservation:${MsgSend.pikDate.toString()}, message: $m",
       },
     );
-    /* if (response.statusCode == 200) {
-     // var res = json.decode(response.body);
-      return true;
-    } else {
-      print("xi7aja maxi talhih");
-      return false;
-    }*/
   }
 
   Future<List> getMessages() async {
     final prefs = await SharedPreferences.getInstance();
     String id = prefs.get('token');
     var url =
-        "https://mobile.darak-app.com/api/v1/get_wpestate_message_owner/${id}";
+        "https://mobile.darak-app.com/api/v1/get_connected_user_messages";
     //print(id);
-    final response = await http.get(url);
+    final response = await http.post(
+        url,
+        body:{
+        'connectedUser':id
+        }
+    );
     if (response.statusCode == 200) {
-      List res = json.decode(response.body);
-      print(res);
-      /*for(int i=0;i<res.length;i++){
-        //print("id:${res[i]["ID"]}");
-        //print("message:${res[i]["post_content"]}");
-        print("mol room:${res[i]["post_parent"]}");
-        print("id room:${res[i]["post_author"]}");
-      }*/
+      MessagesModel.countModel.clear();
+      Map<String, dynamic>
+       res = json.decode(response.body);
+       res.forEach(
+              (k,v){
+                //print(k);
+                for(int i=0;i<k.length;i++){
+                  //print(v);
+                  String message;
+                  String date;
+                  for(int j=0;j<1;j++){
+                   // print("${v[i]["post_parent"]},${v[j]["post_date"]},${v[j]["post_content"]}");
+                    message=v[j]["post_content"];
+                    date = v[j]["post_date"];
+                  }
+                  List<String> messages= List<String>();
+
+                  List<String> dates= List<String>();
+                  for(int j=0;j<v.length;j++){
+                     String m = v[j]["post_content"];
+                     String d = v[j]["post_date"];
+                     //print("${v[i]["post_parent"]},${v[i]["post_author"]},$m");
+                     if(id==v[j]["post_author"]) messages.add("User:/h/a/$m");
+                     else messages.add("admin:/h/a/$m");
+                     dates.add(d);
+                    // print('${v[i]["post_parent"]}/$messages');
+                  }
+                  MessagesModel.countModel.add(
+                      MessagesModel(
+//                          id:id,
+//                          idAdmin: v[i]["post_author"],
+                          idRoom:v[i]["post_parent"],
+                          lastMessage: message,
+                          date: date,
+                         messages: messages,
+                          dates: dates
+                      )
+                  );
+                }
+              }
+      );
+      return MessagesModel.countModel;
+
     } else {
       // print('-------- aaa|aaa --------');
       throw Exception('Failed to get messages');

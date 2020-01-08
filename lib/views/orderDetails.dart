@@ -29,7 +29,6 @@ class _OrderDetqilsState extends State<OrderDetails> {
     String message = _message.text.toString();
     if (message.isNotEmpty) {
       await api.sendMessages(message);
-      await api.getMessages();
       /*Navigator.pushReplacement(
         context,
         MaterialPageRoute(

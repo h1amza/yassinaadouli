@@ -1,23 +1,18 @@
 class MessagesModel {
-  String userId;
-  String userIDRoom;
   String idRoom;
-  String postTitle;
+  String lastMessage;
+  String date;
   List<String> messages;
-
+  List<String> dates;
   MessagesModel({
-    this.userId,
-    this.userIDRoom,
     this.idRoom,
-    this.postTitle,
-    this.messages
-  });
-  /*
-  MessagesModel.map(dynamic obj) {
-    this.userId = obj["ID"];
-    this.userId = obj["user_id"];
-    this.idRoom = obj["post_id"];
-    this.postTitle = obj["post_title"];
+    this.lastMessage,
+    this.date,
+    this.messages,
+    this.dates
   }
-  */
+  );
+
+  static List<MessagesModel> countModel = List<MessagesModel>();
+
 }

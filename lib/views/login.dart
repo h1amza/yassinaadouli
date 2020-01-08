@@ -56,9 +56,9 @@ class _LogInState extends State<LogIn> {
       );
       if (res.isNotEmpty) {
         MsgSend.check();
-        print(MsgSend.emailuser);
-        print(MsgSend.nomuser);
-        print(MsgSend.iduser);
+        //print(MsgSend.emailuser);
+        //print(MsgSend.nomuser);
+        //print(MsgSend.iduser);
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
